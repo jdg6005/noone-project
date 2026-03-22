@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Stepper, { Step } from '../components/Stepper';
 import ScrollVelocity from '../components/ScrollVelocity';
+import { submitAllAnswers } from '../services/apiClient';
 
 function Questionnaire() {
   const [answers, setAnswers] = useState({
@@ -21,9 +22,13 @@ function Questionnaire() {
     }));
   };
 
-  // TO DO FOR JONATHAN: function to POST answers to the backend
-  const submitToBackend = async answersPayload => {
-    void answersPayload;
+  const submitToBackend = async (answersPayload) => {
+    try {
+      const result = await submitAllAnswers(answersPayload);
+      console.log('Submitted successfully, session_id:', result.session_id);
+    } catch (error) {
+      console.error('Failed to submit answers:', error);
+    }
   };
 
   const handleComplete = () => {
