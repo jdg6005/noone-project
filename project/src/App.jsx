@@ -4,7 +4,7 @@ import NavBar from './components/NavBar';
 import About from './pages/About';
 import Tree from './pages/Tree';
 import Questionnaire from './pages/Questionnaire';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import AnimatedContent from './components/AnimatedContent';
 import Grainient from './components/Grainient';
 
@@ -18,12 +18,13 @@ const darkPalette = {
 
 // palette for when user inputs "positive word"
 const lightPalette = {
-  color1: '#6f8b73',
-  color2: '#e69ee4',
-  color3: '#9c4049'
+    color1: "#588157",
+    color2: "#90475f",
+    color3: "#761e66"
 };
 
-function Home({ onGetStarted }) {
+function Home() {
+  const navigate = useNavigate();
   return (
     <div className="home-panel">
       <h1>Your words shape the world around you.</h1>
@@ -39,13 +40,13 @@ function Home({ onGetStarted }) {
         threshold={0.1}
         delay={0.5}
       >
-        <button onClick={onGetStarted}>Get Started</button>
+        <button onClick={() => navigate('/about')}>Get Started</button>
       </AnimatedContent>
     </div>
   );
 }
 
-function AppShell({ onGetStarted }) {
+function AppShell({ onStepChange }) {
   const location = useLocation();
   const isQuestionnaire = location.pathname === '/questionnaire';
 
@@ -53,10 +54,10 @@ function AppShell({ onGetStarted }) {
     <div className={`app-content ${isQuestionnaire ? 'app-content--questionnaire' : ''}`}>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home onGetStarted={onGetStarted} />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/tree" element={<Tree />} />
-        <Route path="/questionnaire" element={<Questionnaire />} />
+        <Route path="/questionnaire" element={<Questionnaire onStepChange={onStepChange} />} />
       </Routes>
     </div>
   );
@@ -104,7 +105,7 @@ function App() {
       </div>
 
       <Router>
-        <AppShell onGetStarted={togglePalette} />
+        <AppShell onStepChange={togglePalette} />
       </Router>
     </div>
   );

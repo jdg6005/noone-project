@@ -3,7 +3,7 @@ import Stepper, { Step } from '../components/Stepper';
 import ScrollVelocity from '../components/ScrollVelocity';
 import { submitAllAnswers } from '../services/apiClient';
 
-function Questionnaire() {
+function Questionnaire({ onStepChange = () => {} }) {
   const [answers, setAnswers] = useState({
     question1: '',
     question2: '',
@@ -59,6 +59,7 @@ function Questionnaire() {
         <Stepper
           initialStep={1}
           onFinalStepCompleted={handleComplete}
+          onStepChange={onStepChange}
           backButtonText="Previous"
           nextButtonText="Next"
         >
