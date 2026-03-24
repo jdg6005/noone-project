@@ -1,29 +1,39 @@
 // API endpoint - update this with your actual backend URL
-const API_ENDPOINT = 'http://localhost:3000/api/answers';
+const API_BASE = 'http://localhost:3000/api';
 
 export const submitAnswer = async (questionId, answer) => {
-  try {
-    const response = await fetch(API_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        questionId,
-        answer,
-        timestamp: new Date().toISOString(),
-      }),
-    });
+  const response = await fetch(`${API_BASE}/answers`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      questionId,
+      answer,
+      timestamp: new Date().toISOString(),
+    }),
+  });
 
-    if (!response.ok) {
-      const text = await response.text();
-      const errorMessage = text || response.statusText || 'Unknown API error';
-      throw new Error(`API error (${response.status}): ${errorMessage}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to submit answer:', error);
-    throw error;
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error (${response.status}): ${text || response.statusText}`);
   }
+
+  return response.json();
+};
+
+export const submitAllAnswers = async (answers) => {
+  const response = await fetch(`${API_BASE}/answers/batch`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      answers,
+      timestamp: new Date().toISOString(),
+    }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`API error (${response.status}): ${text || response.statusText}`);
+  }
+
+  return response.json();
 };
