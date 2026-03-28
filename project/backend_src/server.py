@@ -5,6 +5,7 @@ from pathlib import Path
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from analysis import AnalyzeWords
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"])
@@ -27,6 +28,7 @@ def init_db():
                 session_id  TEXT    NOT NULL,
                 question_id TEXT    NOT NULL,
                 answer      TEXT    NOT NULL,
+                sentiment   INTEGER NOT NULL,
                 timestamp   TEXT    NOT NULL,
                 created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
             )
@@ -43,13 +45,15 @@ def post_answer():
     if not question_id or answer is None:
         return jsonify({"error": "questionId and answer are required"}), 400
 
+    sentiment = AnalyzeWords(answer)
+
     ts = data.get("timestamp") or datetime.now(timezone.utc).isoformat()
     session_id = data.get("sessionId") or str(uuid.uuid4())
 
     with get_db() as conn:
         cur = conn.execute(
-            "INSERT INTO submissions (session_id, question_id, answer, timestamp) VALUES (?, ?, ?, ?)",
-            (session_id, question_id, str(answer), ts),
+            "INSERT INTO submissions (session_id, question_id, answer, sentiment, timestamp) VALUES (?, ?, ?, ?, ?)",
+            (session_id, question_id, str(answer), sentiment, ts),
         )
 
     return jsonify({"id": cur.lastrowid}), 201
@@ -61,6 +65,7 @@ def post_answers_batch():
     data = request.get_json(silent=True) or {}
     answers = data.get("answers")
 
+
     if not answers or not isinstance(answers, dict):
         return jsonify({"error": "answers object is required"}), 400
 
@@ -69,8 +74,8 @@ def post_answers_batch():
 
     with get_db() as conn:
         conn.executemany(
-            "INSERT INTO submissions (session_id, question_id, answer, timestamp) VALUES (?, ?, ?, ?)",
-            [(session_id, qid, str(ans), ts) for qid, ans in answers.items()],
+            "INSERT INTO submissions (session_id, question_id, answer, sentiment, timestamp) VALUES (?, ?, ?, ?, ?)",
+            [(session_id, qid, str(ans), AnalyzeWords(ans), ts) for qid, ans in answers.items()],
         )
 
     return jsonify({"session_id": session_id}), 201
