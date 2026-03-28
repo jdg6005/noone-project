@@ -5,7 +5,7 @@ Install dependency: pip install python-osc
 
 from pythonosc import udp_client
 
-UNREAL_IP = "127.0.0.1"
+UNREAL_IP = "10.201.120.85"
 UNREAL_OSC_PORT = 8000  # Match the port configured in your UE OSC Server
 
 client = udp_client.SimpleUDPClient(UNREAL_IP, UNREAL_OSC_PORT)
