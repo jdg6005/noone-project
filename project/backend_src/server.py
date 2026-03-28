@@ -1,3 +1,4 @@
+import re
 import sqlite3
 import uuid
 from datetime import datetime, timezone
@@ -100,6 +101,23 @@ def get_session(session_id):
             (session_id,),
         ).fetchall()
     return jsonify([dict(r) for r in rows])
+
+
+# GET /api/words — all words from answers in Unreal Engine friendly format
+# Returns { "words": ["word1", "word2", ...] } — root object required by UE's JSON parser
+@app.get("/api/words")
+def get_words():
+    with get_db() as conn:
+        rows = conn.execute("SELECT answer FROM submissions").fetchall()
+
+    words = []
+    for row in rows:
+        for word in re.split(r"\s+", row["answer"].strip()):
+            cleaned = re.sub(r"[^\w'-]", "", word)
+            if cleaned:
+                words.append(cleaned)
+
+    return jsonify({"words": words})
 
 
 if __name__ == "__main__":
