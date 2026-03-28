@@ -6,7 +6,14 @@ from pathlib import Path
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from analysis import AnalyzeWords
+from pythonosc import udp_client
+from analysis import AnalyzeWords, score_words
+
+UNREAL_IP = "10.201.120.85"
+UNREAL_OSC_PORT = 8000
+OSC_ADDRESS = "/sapwood/word"
+
+_osc_client = udp_client.SimpleUDPClient(UNREAL_IP, UNREAL_OSC_PORT)
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:5173"])
@@ -29,7 +36,7 @@ def init_db():
                 session_id  TEXT    NOT NULL,
                 question_id TEXT    NOT NULL,
                 answer      TEXT    NOT NULL,
-                sentiment   INTEGER NOT NULL,
+                sentiment   REAL    NOT NULL,
                 timestamp   TEXT    NOT NULL,
                 created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
             )
@@ -73,11 +80,18 @@ def post_answers_batch():
     session_id = str(uuid.uuid4())
     ts = data.get("timestamp") or datetime.now(timezone.utc).isoformat()
 
+    rows = [(session_id, qid, str(ans), AnalyzeWords(ans), ts) for qid, ans in answers.items()]
+
     with get_db() as conn:
         conn.executemany(
             "INSERT INTO submissions (session_id, question_id, answer, sentiment, timestamp) VALUES (?, ?, ?, ?, ?)",
-            [(session_id, qid, str(ans), AnalyzeWords(ans), ts) for qid, ans in answers.items()],
+            rows,
         )
+
+    # Score each word and send [score, word] via OSC
+    for _, _, answer_text, _, _ in rows:
+        for word, score in score_words(answer_text):
+            _osc_client.send_message(OSC_ADDRESS, [str(score), word])
 
     return jsonify({"session_id": session_id}), 201
 
