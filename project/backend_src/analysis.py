@@ -1,16 +1,21 @@
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+def AnalyzeWords(word):
 
-def AnalyzeWords():
     sentiment = SentimentIntensityAnalyzer()
 
-    word = input("enter word: ").lower().strip()
+    token = word.lower().strip()
 
-    score = sentiment.polarity_scores(word)
+    # GET request to .api/answers
+    # save to csv
+    # python.request
+    # 
+
+    score = sentiment.polarity_scores(token)
 
     if score["compound"] > 0:
-        print("positive")
+        return 1
     elif score["compound"] < 0:
-        print("negative")
+        return -1
     else:
-        print("neither")
+        return 0
