@@ -41,6 +41,10 @@ def init_db():
                 created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        # migrate: add sentiment column if it was created without it
+        existing = {row[1] for row in conn.execute("PRAGMA table_info(submissions)")}
+        if "sentiment" not in existing:
+            conn.execute("ALTER TABLE submissions ADD COLUMN sentiment REAL NOT NULL DEFAULT 0")
 
 
 # POST /api/answers — single answer (used by apiClient.submitAnswer)
@@ -89,7 +93,8 @@ def post_answers_batch():
         )
 
     # Score each word and send [score, word] via OSC
-    for _, _, answer_text, _, _ in rows:
+    for _, qid, answer_text, sentiment, _ in rows:
+        print(f"[{qid}] \"{answer_text}\" → sentiment: {sentiment}")
         for word, score in score_words(answer_text):
             _osc_client.send_message(OSC_ADDRESS, [str(score), word])
 
