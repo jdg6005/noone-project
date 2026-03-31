@@ -3,17 +3,20 @@ import Stepper, { Step } from '../components/Stepper';
 import ScrollVelocity from '../components/ScrollVelocity';
 import { submitAllAnswers } from '../services/apiClient';
 
+const emptyAnswers = {
+  question1: '',
+  question2: '',
+  question3: '',
+  question4: '',
+  question5: '',
+  question6: '',
+  question7: '',
+  question8: ''
+};
+
 function Questionnaire() {
-  const [answers, setAnswers] = useState({
-    question1: '',
-    question2: '',
-    question3: '',
-    question4: '',
-    question5: '',
-    question6: '',
-    question7: '',
-    question8: ''
-  });
+  const [answers, setAnswers] = useState(emptyAnswers);
+  const [stepperKey, setStepperKey] = useState(0);
 
   const handleChange = field => event => {
     setAnswers(current => ({
@@ -33,6 +36,8 @@ function Questionnaire() {
 
   const handleComplete = () => {
     submitToBackend(answers);
+    setAnswers(emptyAnswers);
+    setStepperKey(k => k + 1);
   };
 
   const inputStyle = {
@@ -57,6 +62,7 @@ function Questionnaire() {
 
       <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         <Stepper
+          key={stepperKey}
           initialStep={1}
           onFinalStepCompleted={handleComplete}
           backButtonText="Previous"
