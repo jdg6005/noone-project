@@ -76,7 +76,7 @@ function Questionnaire({ onStepChange = () => {} }) {
           stepCircleContainerClassName="questionnaire-card"
         >
           <Step>
-            <h2 style={questionTitleStyle}>What emotion rises in you when you hear this song?</h2>
+            <h2 style={questionTitleStyle}>What is the first word that comes to mind when you hear this song?</h2>
             <input
               type="text"
               value={answers.question1}
@@ -88,7 +88,7 @@ function Questionnaire({ onStepChange = () => {} }) {
           </Step>
 
           <Step>
-            <h2 style={questionTitleStyle}>What is the first word that comes to mind when you hear this song?</h2>
+            <h2 style={questionTitleStyle}>What emotion rises in you when you hear this song?</h2>
             <input
               type="text"
               value={answers.question2}

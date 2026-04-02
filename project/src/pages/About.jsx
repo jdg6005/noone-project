@@ -54,9 +54,8 @@ In this house.`;
 
   return (
     <div className="about-container">
-      <h1>About Us</h1>
+      <h1>Welcome to SAPWOOD</h1>
       <div className="about-intro">
-        <p>Welcome to SAPWOOD.</p>
         <p>SAPWOOD is an interactive digital space that explores the quiet tension between silence and connection. Through single‑word responses, visitors shape a living 3D environment where emotions drift, grow, and settle into new meaning.</p>
         <p>Our project invites you to pause, reflect, and see how even the smallest word can hold weight. Through our interactive platform, those words can create a shared landscape of understanding.</p>
         <p>Thank you for adding your voice to this space.</p>
