@@ -6,13 +6,30 @@
   font-display: swap;
 }
 
-@font-face {
+/* @font-face {
   font-family: 'Norway';
   src: url('../assets/Norway-rvVR7.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+} */
+
+@font-face {
+font-family: "Kepler Std Black";
+src: url("../assets/KeplerStdBlack.otf") format("opentype");
+font-weight: 900;
+font-style: normal;
+font-display: swap;
 }
+
+@font-face {
+font-family: "Kepler Std Light";
+src: url("../assets/KeplerStdLightCnSubh.otf") format("opentype");
+font-weight: 500;
+font-style: normal;
+font-display: swap;
+}
+
 
 .navbar {
   position: fixed;
@@ -74,7 +91,7 @@
 }
 
 .navbar-links li a {
-  font-family: 'Norway', sans-serif;
+  font-family: 'Kepler Std Light', sans-serif;
   color: white;
   text-decoration: none;
   padding: 0.5rem 1rem;

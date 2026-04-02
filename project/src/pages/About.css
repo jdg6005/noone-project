@@ -1,58 +1,97 @@
 .about-container {
-  padding-top: 4rem;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 2rem;
   text-align: center;
+}
+
+.about-container h1 {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.about-intro {
+  max-width: 640px;
+  margin: 0 auto 3rem;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  line-height: 1.8;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.about-intro p {
+  margin: 0 0 1rem;
+}
+
+.about-intro p:last-child {
+  margin-bottom: 0;
 }
 
 .about-card-row {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 2rem;
+  gap: 2.5rem;
   flex-wrap: wrap;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .about-lyrics-box {
   flex: 1;
   min-width: 280px;
-  max-height: 400px;
+  max-width: 420px;
+  max-height: 420px;
   overflow-y: auto;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.9;
   white-space: pre-wrap;
   font-family: inherit;
+  font-size: 1.05rem;
   text-align: center;
 }
 
 .about-lyrics-box h3 {
   margin-top: 0;
-  margin-bottom: 1rem;
-  opacity: 0.7;
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
+  margin-bottom: 1.25rem;
+  opacity: 0.6;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .about-cta {
-  margin-top: 2.5rem;
+  margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
 .about-cta button {
-  background-color: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #fff;
-  padding: 0.6rem 1.6rem;
+  padding: 0.75rem 2rem;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
   transition: background-color 0.2s, border-color 0.2s;
+}
+
+@media (min-width: 769px) {
+  .about-cta button {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.35);
+  }
 }
 
 .about-cta button:hover {

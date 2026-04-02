@@ -102,6 +102,7 @@ function App() {
             zoom={0.9}
           />
         </div>
+        <div className="app-background-tree" />
       </div>
 
       <Router>

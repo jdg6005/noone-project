@@ -10,17 +10,34 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
+/* @font-face {
   font-family: 'Norway';
   src: url('../assets/Norway-rvVR7.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+} */
+
+@font-face {
+font-family: "Kepler Std Black";
+src: url("../assets/KeplerStdBlack.otf") format("opentype");
+font-weight: 900;
+font-style: normal;
+font-display: swap;
+}
+
+@font-face {
+font-family: "Kepler Std Light";
+src: url("../assets/KeplerStdLightCnSubh.otf") format("opentype");
+font-weight: 500;
+font-style: normal;
+font-display: swap;
 }
 
 
+
 :root {
-  font-family: 'Norway', sans-serif;
+  font-family: 'Kepler Std Light', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 

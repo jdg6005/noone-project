@@ -1,0 +1,19 @@
+.questionnaire-card {
+  max-width: 56rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+}
+
+.questionnaire-card .step-indicator-row,
+.questionnaire-card .step-default,
+.questionnaire-card .footer-container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .questionnaire-card {
+    border-radius: 12px;
+  }
+}
