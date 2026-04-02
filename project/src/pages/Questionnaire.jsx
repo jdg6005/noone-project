@@ -48,13 +48,6 @@ function Questionnaire({ onStepChange = () => {} }) {
 
   return (
     <>
-      <ScrollVelocity
-        texts={['words words words', 'words words words', 'words words words', 'words words words']}
-        velocity={100}
-        className="custom-scroll-text"
-        fullBleed
-      />
-
       <div style={{ maxWidth: '720px', margin: '0 auto' }}>
         <Stepper
           initialStep={1}
@@ -141,13 +134,6 @@ function Questionnaire({ onStepChange = () => {} }) {
           </Step>
         </Stepper>
       </div>
-
-      <ScrollVelocity
-        texts={['words words words', 'words words words', 'words words words', 'words words words', 'words words words', 'words words words']}
-        velocity={100}
-        className="custom-scroll-text"
-        fullBleed
-      />
     </>
   );
 }

@@ -43,7 +43,13 @@
   }
 
   .app-content--questionnaire {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     padding-top: 0;
+    padding-bottom: 2rem;
   }
 }
 

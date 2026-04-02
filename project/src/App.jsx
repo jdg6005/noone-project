@@ -11,16 +11,16 @@ import Grainient from './components/Grainient';
 
 // use this for as default
 const darkPalette = { 
-  color1: '#19241b',
-  color2: '#41304f',
-  color3: '#34282d'
+  color1: '#F8F9FA',
+  color2: '#19241b',
+  color3:  '#181B1E'
 };
 
 // palette for when user inputs "positive word"
 const lightPalette = {
-    color1: "#588157",
-    color2: "#90475f",
-    color3: "#761e66"
+    color1: "#DAE8F2",
+    color2: "#5187b8",
+    color3: "#0b5394"
 };
 
 function Home() {
