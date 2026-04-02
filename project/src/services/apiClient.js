@@ -1,5 +1,4 @@
-// API endpoint - update this with your actual backend URL
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = '/api';
 
 export const submitAnswer = async (questionId, answer) => {
   const response = await fetch(`${API_BASE}/answers`, {

@@ -4,17 +4,20 @@ import ScrollVelocity from '../components/ScrollVelocity';
 import { submitAllAnswers } from '../services/apiClient';
 import './Questionnaire.css';
 
-function Questionnaire({ onStepChange = () => {} }) {
-  const [answers, setAnswers] = useState({
-    question1: '',
-    question2: '',
-    question3: '',
-    question4: '',
-    question5: '',
-    question6: '',
-    question7: '',
-    question8: ''
-  });
+const emptyAnswers = {
+  question1: '',
+  question2: '',
+  question3: '',
+  question4: '',
+  question5: '',
+  question6: '',
+  question7: '',
+  question8: ''
+};
+
+function Questionnaire() {
+  const [answers, setAnswers] = useState(emptyAnswers);
+  const [stepperKey, setStepperKey] = useState(0);
 
   const handleChange = field => event => {
     const firstWord = event.target.value.trimStart().split(/\s+/)[0] || '';
@@ -36,6 +39,8 @@ function Questionnaire({ onStepChange = () => {} }) {
 
   const handleComplete = () => {
     submitToBackend(answers);
+    setAnswers(emptyAnswers);
+    setStepperKey(k => k + 1);
   };
 
   const inputStyle = {
@@ -68,6 +73,7 @@ function Questionnaire({ onStepChange = () => {} }) {
     <>
       <div style={{ maxWidth: '980px', margin: '0 auto', padding: '0 1rem' }}>
         <Stepper
+          key={stepperKey}
           initialStep={1}
           onFinalStepCompleted={handleComplete}
           onStepChange={onStepChange}
