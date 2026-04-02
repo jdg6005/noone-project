@@ -76,7 +76,6 @@ function Questionnaire() {
           key={stepperKey}
           initialStep={1}
           onFinalStepCompleted={handleComplete}
-          onStepChange={onStepChange}
           backButtonText="Previous"
           nextButtonText="Next"
           stepCircleContainerClassName="questionnaire-card"
