@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Stepper, { Step } from '../components/Stepper';
 import ScrollVelocity from '../components/ScrollVelocity';
-import { submitAllAnswers } from '../services/apiClient';
+import { submitAnswer } from '../services/apiClient';
 import './Questionnaire.css';
 
 const emptyAnswers = {
@@ -18,6 +18,15 @@ const emptyAnswers = {
 function Questionnaire() {
   const [answers, setAnswers] = useState(emptyAnswers);
   const [stepperKey, setStepperKey] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
+  const stepperRef = useRef(null);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      stepperRef.current?.next();
+    }
+  };
 
   const handleChange = field => event => {
     const firstWord = event.target.value.trimStart().split(/\s+/)[0] || '';
@@ -28,19 +37,27 @@ function Questionnaire() {
     }));
   };
 
-  const submitToBackend = async (answersPayload) => {
+  const submitCurrentAnswer = async (step, answersSnapshot) => {
+    const questionKey = `question${step}`;
     try {
-      const result = await submitAllAnswers(answersPayload);
-      console.log('Submitted successfully, session_id:', result.session_id);
+      await submitAnswer(step, answersSnapshot[questionKey]);
     } catch (error) {
-      console.error('Failed to submit answers:', error);
+      console.error(`Failed to submit answer for question ${step}:`, error);
     }
   };
 
+  const handleStepChange = (newStep) => {
+    if (newStep > currentStep) {
+      submitCurrentAnswer(currentStep, answers);
+    }
+    setCurrentStep(newStep);
+  };
+
   const handleComplete = () => {
-    submitToBackend(answers);
+    submitCurrentAnswer(currentStep, answers);
     setAnswers(emptyAnswers);
     setStepperKey(k => k + 1);
+    setCurrentStep(1);
   };
 
   const inputStyle = {
@@ -73,8 +90,10 @@ function Questionnaire() {
     <>
       <div style={{ maxWidth: '980px', margin: '0 auto', padding: '0 1rem' }}>
         <Stepper
+          ref={stepperRef}
           key={stepperKey}
           initialStep={1}
+          onStepChange={handleStepChange}
           onFinalStepCompleted={handleComplete}
           backButtonText="Previous"
           nextButtonText="Next"
@@ -88,6 +107,7 @@ function Questionnaire() {
               onChange={handleChange('question1')}
               placeholder="Type your answer here"
               style={inputStyle}
+              onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
           </Step>
@@ -100,6 +120,7 @@ function Questionnaire() {
               onChange={handleChange('question2')}
               placeholder="Type your answer here"
               style={inputStyle}
+              onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
           </Step>
@@ -112,6 +133,7 @@ function Questionnaire() {
               onChange={handleChange('question3')}
               placeholder="Type your answer here"
               style={inputStyle}
+              onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
           </Step>
@@ -124,6 +146,7 @@ function Questionnaire() {
               onChange={handleChange('question4')}
               placeholder="Type your answer here"
               style={inputStyle}
+              onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
           </Step>
@@ -136,6 +159,7 @@ function Questionnaire() {
               onChange={handleChange('question5')}
               placeholder="Type your answer here"
               style={inputStyle}
+              onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
           </Step>
@@ -148,6 +172,7 @@ function Questionnaire() {
               onChange={handleChange('question6')}
               placeholder="Type your answer here"
               style={inputStyle}
+              onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
           </Step>
@@ -160,6 +185,7 @@ function Questionnaire() {
               onChange={handleChange('question7')}
               placeholder="Type your answer here"
               style={inputStyle}
+              onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
           </Step>

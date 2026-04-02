@@ -1,9 +1,9 @@
-import React, { useState, Children, useRef, useLayoutEffect } from 'react';
+import React, { useState, Children, useRef, useLayoutEffect, forwardRef, useImperativeHandle } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 import './Stepper.css';
 
-export default function Stepper({
+const Stepper = forwardRef(function Stepper({
   children,
   initialStep = 1,
   onStepChange = () => {},
@@ -19,7 +19,7 @@ export default function Stepper({
   disableStepIndicators = false,
   renderStepIndicator,
   ...rest
-}) {
+}, ref) {
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [direction, setDirection] = useState(0);
   const stepsArray = Children.toArray(children);
@@ -54,6 +54,16 @@ export default function Stepper({
     setDirection(1);
     updateStep(totalSteps + 1);
   };
+
+  useImperativeHandle(ref, () => ({
+    next: () => {
+      if (isLastStep) {
+        handleComplete();
+      } else {
+        handleNext();
+      }
+    }
+  }));
 
   return (
     <div className="outer-container" {...rest}>
@@ -120,7 +130,9 @@ export default function Stepper({
       </div>
     </div>
   );
-}
+});
+
+export default Stepper;
 
 function StepContentWrapper({ isCompleted, currentStep, direction, children, className }) {
   const [parentHeight, setParentHeight] = useState(0);
