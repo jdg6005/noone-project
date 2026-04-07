@@ -68,6 +68,10 @@ def post_answer():
             (session_id, question_id, str(answer), sentiment, ts),
         )
 
+    print(f"[{question_id}] \"{answer}\" → sentiment: {sentiment}")
+    for word, score in score_words(str(answer)):
+        _osc_client.send_message(OSC_ADDRESS, [str(score), word])
+
     return jsonify({"id": cur.lastrowid}), 201
 
 
