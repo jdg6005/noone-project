@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'motion/react';
 import './Credits.css';
 
 function Credits() {
@@ -7,7 +8,13 @@ function Credits() {
 
   return (
     <div className="credits-container">
-      <div className="credits-box">
+      <motion.div
+        className="credits-box"
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: 'auto', opacity: 1 }}
+        transition={{ type: 'spring', duration: 0.4 }}
+        style={{ position: 'relative', overflow: 'hidden' }}
+      >
         <h1>Thank You For Participating!</h1>
         <p className="credits-line">Frontend Designer - Carlo Clerigo</p>
         <p className="credits-line">Frontend and Video Editor - Jaidan Giglio</p>
@@ -23,7 +30,7 @@ function Credits() {
         >
           Redo Questionnaire
         </button>
-      </div>
+      </motion.div>
     </div>
   );
 }
