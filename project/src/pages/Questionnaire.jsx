@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Stepper, { Step } from '../components/Stepper';
 import ScrollVelocity from '../components/ScrollVelocity';
 import { submitAnswer } from '../services/apiClient';
@@ -20,6 +20,19 @@ function Questionnaire() {
   const [stepperKey, setStepperKey] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   const stepperRef = useRef(null);
+  const inputRefs = useRef({});
+
+  const setInputRef = (field) => (el) => {
+    inputRefs.current[field] = el;
+  };
+
+  useEffect(() => {
+    const activeInput = inputRefs.current[`question${currentStep}`];
+    if (activeInput) {
+      activeInput.focus();
+      activeInput.select();
+    }
+  }, [currentStep]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -102,6 +115,7 @@ function Questionnaire() {
           <Step>
             <h2 style={questionTitleStyle}>What is the first word that comes to mind when you hear this song?</h2>
             <input
+              ref={setInputRef('question1')}
               type="text"
               value={answers.question1}
               onChange={handleChange('question1')}
@@ -115,6 +129,7 @@ function Questionnaire() {
           <Step>
             <h2 style={questionTitleStyle}>What emotion rises in you when you hear this song?</h2>
             <input
+              ref={setInputRef('question2')}
               type="text"
               value={answers.question2}
               onChange={handleChange('question2')}
@@ -128,6 +143,7 @@ function Questionnaire() {
           <Step>
             <h2 style={questionTitleStyle}>What word captures how it feels to speak to strangers today?</h2>
             <input
+              ref={setInputRef('question3')}
               type="text"
               value={answers.question3}
               onChange={handleChange('question3')}
@@ -141,6 +157,7 @@ function Questionnaire() {
           <Step>
             <h2 style={questionTitleStyle}>What emotion fills you during confrontation?</h2>
             <input
+              ref={setInputRef('question4')}
               type="text"
               value={answers.question4}
               onChange={handleChange('question4')}
@@ -154,6 +171,7 @@ function Questionnaire() {
           <Step>
             <h2 style={questionTitleStyle}>What word describes the home you wish existed?</h2>
             <input
+              ref={setInputRef('question5')}
               type="text"
               value={answers.question5}
               onChange={handleChange('question5')}
@@ -167,6 +185,7 @@ function Questionnaire() {
           <Step>
             <h2 style={questionTitleStyle}>If one one word could make someone truly hear you, what would it be?</h2>
             <input
+              ref={setInputRef('question6')}
               type="text"
               value={answers.question6}
               onChange={handleChange('question6')}
@@ -180,6 +199,7 @@ function Questionnaire() {
           <Step>
             <h2 style={questionTitleStyle}>What is the final word that comes to mind when you reflect on this experience?</h2>
             <input
+              ref={setInputRef('question7')}
               type="text"
               value={answers.question7}
               onChange={handleChange('question7')}
