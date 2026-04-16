@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Stepper, { Step } from '../components/Stepper';
 import ScrollVelocity from '../components/ScrollVelocity';
 import { submitAnswer } from '../services/apiClient';
@@ -15,22 +16,29 @@ const emptyAnswers = {
   question8: ''
 };
 
+const stepQuestionFields = ['question3', 'question4', 'question5', 'question1', 'question2', 'question6', 'question7'];
+
 function Questionnaire() {
   const [answers, setAnswers] = useState(emptyAnswers);
   const [stepperKey, setStepperKey] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   const stepperRef = useRef(null);
   const inputRefs = useRef({});
+  const navigate = useNavigate();
+  const stepQuestionFields = ['question3', 'question4', 'question5', 'question1', 'question2', 'question6', 'question7'];
 
   const setInputRef = (field) => (el) => {
     inputRefs.current[field] = el;
   };
 
   useEffect(() => {
-    const activeInput = inputRefs.current[`question${currentStep}`];
+    const fieldName = stepQuestionFields[currentStep - 1];
+    const activeInput = inputRefs.current[fieldName];
     if (activeInput) {
-      activeInput.focus();
-      activeInput.select();
+      requestAnimationFrame(() => {
+        activeInput.focus();
+        activeInput.select();
+      });
     }
   }, [currentStep]);
 
@@ -51,7 +59,7 @@ function Questionnaire() {
   };
 
   const submitCurrentAnswer = async (step, answersSnapshot) => {
-    const questionKey = `question${step}`;
+    const questionKey = stepQuestionFields[step - 1];
     try {
       await submitAnswer(step, answersSnapshot[questionKey]);
     } catch (error) {
@@ -71,6 +79,7 @@ function Questionnaire() {
     setAnswers(emptyAnswers);
     setStepperKey(k => k + 1);
     setCurrentStep(1);
+    navigate('/credits');
   };
 
   const inputStyle = {
@@ -112,33 +121,6 @@ function Questionnaire() {
           nextButtonText="Next"
           stepCircleContainerClassName="questionnaire-card"
         >
-          <Step>
-            <h2 style={questionTitleStyle}>What is the first word that comes to mind when you hear this song?</h2>
-            <input
-              ref={setInputRef('question1')}
-              type="text"
-              value={answers.question1}
-              onChange={handleChange('question1')}
-              placeholder="Type your answer here"
-              style={inputStyle}
-              onKeyDown={handleKeyDown}
-            />
-            <small style={helperTextStyle}>One word response only</small>
-          </Step>
-
-          <Step>
-            <h2 style={questionTitleStyle}>What emotion rises in you when you hear this song?</h2>
-            <input
-              ref={setInputRef('question2')}
-              type="text"
-              value={answers.question2}
-              onChange={handleChange('question2')}
-              placeholder="Type your answer here"
-              style={inputStyle}
-              onKeyDown={handleKeyDown}
-            />
-            <small style={helperTextStyle}>One word response only</small>
-          </Step>
 
           <Step>
             <h2 style={questionTitleStyle}>What word captures how it feels to speak to strangers today?</h2>
@@ -183,7 +165,35 @@ function Questionnaire() {
           </Step>
 
           <Step>
-            <h2 style={questionTitleStyle}>If one one word could make someone truly hear you, what would it be?</h2>
+            <h2 style={questionTitleStyle}>What is the first word that comes to mind when you hear this song?</h2>
+            <input
+              ref={setInputRef('question1')}
+              type="text"
+              value={answers.question1}
+              onChange={handleChange('question1')}
+              placeholder="Type your answer here"
+              style={inputStyle}
+              onKeyDown={handleKeyDown}
+            />
+            <small style={helperTextStyle}>One word response only</small>
+          </Step>
+
+          <Step>
+            <h2 style={questionTitleStyle}>What emotion rises in you when you hear this song?</h2>
+            <input
+              ref={setInputRef('question2')}
+              type="text"
+              value={answers.question2}
+              onChange={handleChange('question2')}
+              placeholder="Type your answer here"
+              style={inputStyle}
+              onKeyDown={handleKeyDown}
+            />
+            <small style={helperTextStyle}>One word response only</small>
+          </Step>
+
+          <Step>
+            <h2 style={questionTitleStyle}>If one word could make someone truly hear you, what would it be?</h2>
             <input
               ref={setInputRef('question6')}
               type="text"
