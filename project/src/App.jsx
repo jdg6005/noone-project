@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css'
 import NavBar from './components/NavBar';
 import About from './pages/About';
-import Tree from './pages/Tree';
+import Credits from './pages/Credits';
 import Questionnaire from './pages/Questionnaire';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import AnimatedContent from './components/AnimatedContent';
@@ -56,7 +56,7 @@ function AppShell({ onStepChange }) {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/tree" element={<Tree />} />
+        <Route path="/credits" element={<Credits />} />
         <Route path="/questionnaire" element={<Questionnaire onStepChange={onStepChange} />} />
       </Routes>
     </div>
