@@ -23,13 +23,6 @@ function Credits() {
         <p className="credits-line">Material Designer - Jynn Lee</p>
         <p className="credits-line">Technical Artist - Tommy Desjardins</p>
         <p className="credits-line">Musical Artist - Adrianna Noone</p>
-        <button
-          type="button"
-          className="credits-button"
-          onClick={() => navigate('/questionnaire')}
-        >
-          Redo Questionnaire
-        </button>
       </motion.div>
     </div>
   );
