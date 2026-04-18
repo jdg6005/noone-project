@@ -77,7 +77,6 @@ function Questionnaire() {
   const handleComplete = () => {
     submitCurrentAnswer(currentStep, answers);
     setAnswers(emptyAnswers);
-    setStepperKey(k => k + 1);
     setCurrentStep(1);
     navigate('/');
   };
