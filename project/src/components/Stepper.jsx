@@ -52,7 +52,7 @@ const Stepper = forwardRef(function Stepper({
 
   const handleComplete = () => {
     setDirection(1);
-    updateStep(totalSteps + 1);
+    onFinalStepCompleted();
   };
 
   useImperativeHandle(ref, () => ({
