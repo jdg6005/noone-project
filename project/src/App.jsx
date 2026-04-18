@@ -27,7 +27,20 @@ function Home() {
   const navigate = useNavigate();
   return (
     <div className="home-panel">
-      <h1>Your words shape the world around you.</h1>
+      <AnimatedContent
+        distance={0}
+        direction="vertical"
+        reverse={false}
+        duration={1.0}
+        ease="power3.out"
+        initialOpacity={0}
+        animateOpacity
+        scale={1}
+        threshold={0.1}
+        delay={0.2}
+      >
+        <h1>Your words shape the world around you.</h1>
+      </AnimatedContent>
       <AnimatedContent
         distance={150}
         direction="vertical"
