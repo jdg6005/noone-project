@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './App.css'
 import NavBar from './components/NavBar';
 import About from './pages/About';
@@ -62,23 +62,39 @@ function Home() {
 function AppShell({ onStepChange }) {
   const location = useLocation();
   const isQuestionnaire = location.pathname === '/questionnaire';
+  const persistentAudioRef = useRef(null);
+
+  useEffect(() => {
+    if (location.pathname === '/about' && persistentAudioRef.current) {
+      persistentAudioRef.current.currentTime = 0; 
+    } else if (location.pathname === '/' && persistentAudioRef.current) {
+      persistentAudioRef.current.pause();
+      persistentAudioRef.current.currentTime = 0; 
+    }
+  }, [location.pathname]);
 
   return (
     <div className={`app-content ${isQuestionnaire ? 'app-content--questionnaire' : ''}`}>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<About persistentAudioRef={persistentAudioRef} />} />
         <Route path="/credits" element={<Credits />} />
         <Route path="/questionnaire" element={<Questionnaire onStepChange={onStepChange} />} />
       </Routes>
+
+      <audio
+        ref={persistentAudioRef}
+        src="/audio/words-for-war.mp3"
+        preload="metadata"
+        style={{ display: 'none' }}
+      />
     </div>
   );
 }
 
 function App() {
   const [palette, setPalette] = useState(darkPalette);
-
 
   function togglePalette() {
     setPalette(current =>
