@@ -25,6 +25,20 @@
   transform: translateZ(0);
 }
 
+.about-song-intro {
+  max-width: 400px;
+  margin: 0 auto 3rem;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.2rem;
+  line-height: 1.8;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
 .about-intro p {
   margin: 0 0 1rem;
 }
