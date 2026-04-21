@@ -15,7 +15,7 @@ function Credits() {
         transition={{ type: 'spring', duration: 0.4 }}
         style={{ position: 'relative', overflow: 'hidden' }}
       >
-        <h1>Thank You For Participating!</h1>
+        <h1>Our Team</h1>
         <p className="credits-line">Frontend Designer - Carlo Clerigo</p>
         <p className="credits-line">Frontend and Video Editor - Jaidan Giglio</p>
         <p className="credits-line">Backend Designer - Johnathan Liu</p>

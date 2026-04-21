@@ -78,7 +78,7 @@ function Questionnaire() {
     submitCurrentAnswer(currentStep, answers);
     setAnswers(emptyAnswers);
     setCurrentStep(1);
-    navigate('/');
+    navigate('/info');
   };
 
   const inputStyle = {
@@ -133,6 +133,7 @@ function Questionnaire() {
               onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
+            <small style={helperTextStyle}>Remember to watch the experience while answering!</small>
           </Step>
 
           <Step>
@@ -147,6 +148,8 @@ function Questionnaire() {
               onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
+            <small style={helperTextStyle}>Remember to watch the experience while answering!</small>
+
           </Step>
 
           <Step>
@@ -161,6 +164,8 @@ function Questionnaire() {
               onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
+            <small style={helperTextStyle}>Remember to watch the experience while answering!</small>
+
           </Step>
 
           <Step>
@@ -175,10 +180,12 @@ function Questionnaire() {
               onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
+            <small style={helperTextStyle}>Remember to watch the experience while answering!</small>
+
           </Step>
 
           <Step>
-            <h2 style={questionTitleStyle}>What emotion rises in you when you hear this song?</h2>
+            <h2 style={questionTitleStyle}>What is the strongest emotion you have felt listening to music?</h2>
             <input
               ref={setInputRef('question2')}
               type="text"
@@ -189,6 +196,7 @@ function Questionnaire() {
               onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
+            <small style={helperTextStyle}>Remember to watch the experience while answering!</small>
           </Step>
 
           <Step>
@@ -203,6 +211,7 @@ function Questionnaire() {
               onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
+            <small style={helperTextStyle}>Remember to watch the experience while answering!</small>
           </Step>
 
           <Step>
@@ -217,6 +226,7 @@ function Questionnaire() {
               onKeyDown={handleKeyDown}
             />
             <small style={helperTextStyle}>One word response only</small>
+            <small style={helperTextStyle}>Remember to watch the experience while answering!</small>
           </Step>
         </Stepper>
       </div>
